@@ -40,37 +40,42 @@ class _TvMazeCastPageState extends State<TvMazeCastPage> {
         centerTitle: true,
         title: Text('Cast',style: primaryStyle,),
       ),
-      body: FutureBuilder(
-        future: _castFuture,
-        builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: loader(),
+      body: body()
+    );
+  }
+
+
+  body(){
+    return FutureBuilder(
+    future: _castFuture,
+    builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return Center(
+          child: loader(),
+        );
+      } else if (snapshot.hasError) {
+        return Center(
+          child: Text('Error: ${snapshot.error}'),
+        );
+      } else {
+        List<dynamic> cast = snapshot.data!;
+        return ListView.builder(
+          itemCount: cast.length,
+          itemBuilder: (context, index) {
+            final castMember = cast[index];
+            return ListTile(
+              leading: CircleAvatar(
+                backgroundImage: castMember['person']['image'] != null
+                    ? NetworkImage(castMember['person']['image']['medium'])
+                    : null,
+              ),
+              title: Text(castMember['person']['name'],style: notSignedInStyle,),
+              subtitle: Text('Role: ${castMember['character']['name']}',style: chatTitleStyle,),
             );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text('Error: ${snapshot.error}'),
-            );
-          } else {
-            List<dynamic> cast = snapshot.data!;
-            return ListView.builder(
-              itemCount: cast.length,
-              itemBuilder: (context, index) {
-                final castMember = cast[index];
-                return ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: castMember['person']['image'] != null
-                        ? NetworkImage(castMember['person']['image']['medium'])
-                        : null,
-                  ),
-                  title: Text(castMember['person']['name'],style: notSignedInStyle,),
-                  subtitle: Text('Role: ${castMember['character']['name']}',style: chatTitleStyle,),
-                );
-              },
-            );
-          }
-        },
-      ),
+          },
+        );
+      }
+    },
     );
   }
 

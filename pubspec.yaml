@@ -32,7 +32,6 @@ dependencies:
     sdk: flutter
   dio:
   provider:
-  internet_connection_checker:
   get:
 
 
