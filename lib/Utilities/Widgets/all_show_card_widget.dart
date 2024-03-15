@@ -28,7 +28,7 @@ class AllShowCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Expanded(
-                  flex: 3,
+                  flex: 4,
                   child: ClipRRect(
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
                     child: Image.network(
@@ -38,7 +38,7 @@ class AllShowCard extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(

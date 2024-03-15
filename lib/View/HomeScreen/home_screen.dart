@@ -5,8 +5,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
-import 'package:trogon_mt/Provider/home_page_provider.dart';
 import 'package:trogon_mt/Utilities/Widgets/all_show_card_widget.dart';
 import 'package:trogon_mt/Utilities/Widgets/appbar_widget.dart';
 import 'package:http/http.dart' as http;
@@ -24,25 +22,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  List userData = [];
-  int lengthOfresponse = 0;
   late Future<List<dynamic>> _showsFuture;
 
 
   @override
   void initState()  {
-    // TODO: implement initState
-  getDataLength();
+    super.initState();
   _showsFuture = fetchHomeData();
-    Provider.of<HomePageProvider>(context,listen: false).getHomePageData(context: context, userData:userData );
-  }
-
-  getDataLength() async{
-    List<dynamic> response = await fetchHomeData();
-
-    setState(() {
-      lengthOfresponse = response.length;
-    });
+     // Provider.of<HomePageProvider>(context,listen: false).getHomePageData(context: context,);
   }
 
 
@@ -56,6 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {throw Exception('Failed to load data');
     }
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisSpacing: 8.0,
                   crossAxisSpacing: 8.0,
                 ),
-                itemCount: lengthOfresponse,
+                itemCount: shows.length,
                 itemBuilder: (context, index) {
                   final show = shows[index];
                   return AllShowCard(
@@ -98,13 +87,18 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+
+
   loader() {
   return Center(
     child: CircleAvatar(
-      radius: 15,
+      radius: 20,
       backgroundColor: Colors.black12,
-      child: CircularProgressIndicator(
-        color: Colors.blue.shade900,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: CircularProgressIndicator(
+          color: Colors.blue.shade900,
+        ),
       ),
     ),
   );

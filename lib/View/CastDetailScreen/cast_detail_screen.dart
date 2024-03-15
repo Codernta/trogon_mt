@@ -82,10 +82,13 @@ class _TvMazeCastPageState extends State<TvMazeCastPage> {
   loader() {
     return Center(
       child: CircleAvatar(
-        radius: 15,
+        radius: 20,
         backgroundColor: Colors.black12,
-        child: CircularProgressIndicator(
-          color: Colors.blue.shade900,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CircularProgressIndicator(
+            color: Colors.blue.shade900,
+          ),
         ),
       ),
     );
